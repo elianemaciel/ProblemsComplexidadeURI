@@ -27,24 +27,29 @@ def solve(pos, capacidade):
 
 
 def main():
+
     import sys
     sys.stdin = open('teste.txt')
     galhos = int(input())
     global VET, PACOTES, ENFEITES, PESO_PAC
-  
+    result = []
     for i in range(112):
         VET.append([])
         for j in range(612):
             VET[i].append(-1)
     for i in range(galhos):
-        PACOTES = int(input())
-        CAPACIDADE = int(input())
+        PACOTES = int(raw_input())
+        CAPACIDADE = int(raw_input())
         for j in range(PACOTES):
-            line = input().split(' ')
+            line = raw_input().split()
             ENFEITES.insert(j, int(line[0]))
             PESO_PAC.insert(j, int(line[1]))
-        print("Galho %d:" % (i+1))
-        print("Numero total de enfeites: %d\n" % solve(0, CAPACIDADE))
+        solved = solve(0, CAPACIDADE)
+        result.append(solved)
+
+    for i in enumerate(result):
+        print("Galho %d:" % (i[0]+1))
+        print("Numero total de enfeites: %d\n" % i[1])
     return
 
 main()

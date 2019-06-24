@@ -1,42 +1,42 @@
 #include <stdio.h>
 #define MAXR 101
 #define MAXK 10010
-int grau[MAXR],dp[MAXR][MAXK],possivel,r,k;
+int GRAU[MAXR],DP[MAXR][MAXK],POSSIVEL,REGIOES,PONTES;
 
-int calcula(int regiao,int restam){
-    if (possivel){
+int solve(int regiao,int restam){
+    if (POSSIVEL){
         return 1;
     }
-    if (restam < 0 || regiao > r){
+    if (restam < 0 || regiao > REGIOES){
         return 0;
     }
     if(restam == 0){
-        possivel = 1;
-        return dp[regiao][restam] = 1;
+        POSSIVEL = 1;
+        return DP[regiao][restam] = 1;
     }
-    if(dp[regiao][restam] != -1){
-        return dp[regiao][restam];
+    if(DP[regiao][restam] != -1){
+        return DP[regiao][restam];
     }
-    dp[regiao][restam] = calcula(regiao+1,restam) || calcula(regiao+1,restam - grau[regiao]);
-    return dp[regiao][restam];
+    DP[regiao][restam] = solve(regiao+1,restam) || solve(regiao+1,restam - GRAU[regiao]);
+    return DP[regiao][restam];
 }
 
 int main(){
-    while(scanf("%d %d",&r,&k) != EOF){
-        possivel = 0;
-    for(int i=1;i<=r;i++){
-        grau[i] = 0;
-        for(int j=0;j<=k;j++){
-            dp[i][j] = -1;
+    while(scanf("%d %d",&REGIOES,&PONTES) != EOF){
+        POSSIVEL = 0;
+    for(int i=1;i<=REGIOES;i++){
+        GRAU[i] = 0;
+        for(int j=0;j<=PONTES;j++){
+            DP[i][j] = -1;
         }
     }
-    for(int i=1;i<=k;i++){
+    for(int i=1;i<=PONTES;i++){
         int u,v;
         scanf("%d %d",&u,&v);
-        grau[u]++;
-        grau[v]++;
+        GRAU[u]++;
+        GRAU[v]++;
     }
-    printf("%c\n", calcula(1,k) ? 'S' : 'N');
+    printf("%c\n", solve(1,PONTES) ? 'S' : 'N');
     }
     return 0;
 }
