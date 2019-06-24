@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
-MAXP = 112
-MAXW = 1123
-
 PACOTES = 0
 CAPACIDADE = 0
 VET = []
@@ -11,7 +7,8 @@ ENFEITES = []
 PESO_PAC = []
 
 def solve(pos, capacidade):
-    global PACOTES, VET, PESO_PAC
+    global PACOTES, VET, PESO_PAC, ENFEITES, CAPACIDADE
+
     if pos == PACOTES or capacidade == 0:
         return 0
     if VET[pos][capacidade] != -1:
@@ -27,19 +24,21 @@ def solve(pos, capacidade):
 
 
 def main():
-
-    import sys
-    sys.stdin = open('teste.txt')
-    galhos = int(input())
     global VET, PACOTES, ENFEITES, PESO_PAC
+
+    VET = [[-1 for i in range(1000)] for i in range(1000)]
+
+    # import sys
+    # sys.stdin = open('teste.txt')
+    galhos = int(input())
     result = []
-    for i in range(112):
-        VET.append([])
-        for j in range(612):
-            VET[i].append(-1)
+
     for i in range(galhos):
         PACOTES = int(raw_input())
         CAPACIDADE = int(raw_input())
+        ENFEITES = []
+        PESO_PAC = []
+        VET = [[-1 for i in range(1000)] for i in range(1000)]
         for j in range(PACOTES):
             line = raw_input().split()
             ENFEITES.insert(j, int(line[0]))

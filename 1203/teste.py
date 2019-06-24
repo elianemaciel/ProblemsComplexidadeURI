@@ -31,41 +31,33 @@ def main():
     global POSSIVEL, GRAU, DP, REGIOES, PONTES
     results = []
 
-    try:
-        import sys
-        sys.stdin = open('teste.txt')
+    import sys
+    sys.stdin = open('teste.txt')
 
-        while True:
-            try:
-                lines = raw_input().split()
-            except EOFError:
+    while True:
+        try:
+            lines = raw_input().split()
+        except EOFError:
 
-                break
-            REGIOES = int(lines[0])
-            PONTES = int(lines[1])
-            POSSIVEL = 0
-            DP = [[] for i in range(REGIOES+1)]
-            GRAU = [0 for i in range(REGIOES+1)]
-
-            for i in DP:
-                for j in range(PONTES+1):
-                    i.append(-1)
-            for v in range(PONTES):
-                line = raw_input().split()
-                cid_a = int(line[0])
-                cid_b = int(line[1])
-                GRAU[cid_a] += 1
-                GRAU[cid_b] += 1
-            solved = solve(0, PONTES)
-            if solved:
-                results.append('s')
-            else:
-                results.append('n')
-        for i in results:
-            print i
-        print
-    except Exception as e:
-        print e
-        pass
-
+            break
+        REGIOES = int(lines[0])
+        PONTES = int(lines[1])
+        POSSIVEL = 0
+        DP = [[-1 for j in range(PONTES+1)] for i in range(REGIOES+1)]
+        GRAU = [0 for i in range(REGIOES+1)]
+        for v in range(PONTES):
+            line = raw_input().split()
+            cid_a = int(line[0])
+            cid_b = int(line[1])
+            GRAU[cid_a] += 1
+            GRAU[cid_b] += 1
+        solved = solve(0, PONTES)
+        if solved:
+            results.append('S')
+        else:
+            results.append('N')
+    for i in results:
+        print i
+    print ""
+    
 main()
