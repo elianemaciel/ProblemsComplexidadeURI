@@ -30,10 +30,8 @@ def solve(pos, tem):
 
 
 def main():
-    import time
     count = 0
     global DURACAO,  PONTOS, TEMPO, NUM, MAXI
-    inicio = time.time()
     import sys
     sys.stdin = open('teste.txt')
     result = []
@@ -41,23 +39,15 @@ def main():
         line = raw_input().split()
         NUM = int(line[0])
         TEMPO = int(line[1])
-        MAXI = []
-        for i in range(112):
-            MAXI.append([])
-            for j in range(612):
-                MAXI[i].append(-1)
         if NUM == 0 and TEMPO == 0:
             break
+        MAXI = [[-1 for j in range(612)] for i in range(112)]
         for i in range(NUM):
-            lines = raw_input().split(' ')
+            lines = raw_input().split()
             DURACAO.insert(i, int(lines[0]))
             PONTOS.insert(i, int(lines[1]))
         solved = solve(0, TEMPO)
         result.append(solved)
     for inst in enumerate(result):
         print("Instancia %d\n%d\n" % (inst[0]+1, inst[1]))
-
-    fim = time.time()
-    print(fim - inicio)
-
 main()
