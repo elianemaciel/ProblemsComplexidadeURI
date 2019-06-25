@@ -1,31 +1,31 @@
 # -*- coding: utf-8 -*-
 
-POSSIVEL = 0
-REGIOES =0
-PONTES =0
-GRAU = []
-DP = []
+def solve(regiao, restam, dp, grau, possivel, regioes, pontes):
 
-def solve(regiao, restam):
-    global DP, GRAU, POSSIVEL, REGIOES, PONTES
-
-    if POSSIVEL:
+    if possivel:
         return 1
-    elif restam < 0 or regiao > REGIOES:
+    if restam < 0 or regiao > regioes:
         return 0
-    elif restam == 0:
-        POSSIVEL = 1
-        DP[regiao][restam] = 1
-        return DP[regiao][restam]
-    elif DP[regiao][restam] != -1:
-        return DP[regiao][restam]
+    if restam == 0:
+        possivel = 1
+        dp[regiao][restam] = 1
+        return dp[regiao][restam]
+    if restam > pontes:
+        return solve(regiao+1, restam-grau[regiao], dp, grau, possivel, regioes, pontes);
+    if dp[regiao][restam] != -1:
+        return dp[regiao][restam]
+    if  solve(regiao+1, restam, dp, grau, possivel, regioes, pontes):
+        return 1
 
-    DP[regiao][restam] = solve(regiao+1, restam) or solve(regiao+1, restam - GRAU[regiao])
+    return solve(regiao+1, restam - grau[regiao], dp, grau, possivel, regioes, pontes)
 
-    return DP[regiao][restam]
 
 def main():
-    global POSSIVEL, GRAU, DP, REGIOES, PONTES
+    possivel = 0
+    regioes = 0
+    pontes = 0
+    grau = []
+    dp = []
     results = []
 
     import sys
@@ -37,18 +37,18 @@ def main():
         except EOFError:
 
             break
-        REGIOES = int(lines[0])
-        PONTES = int(lines[1])
-        POSSIVEL = 0
-        DP = [[-1 for j in range(PONTES+1)] for i in range(REGIOES+1)]
-        GRAU = [0 for i in range(REGIOES+1)]
-        for v in range(PONTES):
+        regioes = int(lines[0])
+        pontes = int(lines[1])
+        possivel = 0
+        dp = [[-1 for j in range(pontes+1)] for i in range(regioes+1)]
+        grau = [0 for i in range(regioes+1)]
+        for v in range(pontes):
             line = raw_input().split()
             cid_a = int(line[0])
             cid_b = int(line[1])
-            GRAU[cid_a] += 1
-            GRAU[cid_b] += 1
-        results.append(solve(0, PONTES))
+            grau[cid_a] += 1
+            grau[cid_b] += 1
+        results.append(solve(0, pontes, dp, grau, possivel, regioes, pontes))
 
     for i in results:
         if i:
@@ -56,5 +56,6 @@ def main():
         else:
             print 'N'
     print ""
-    
-main()
+
+if __name__ == "__main__":
+    main()
