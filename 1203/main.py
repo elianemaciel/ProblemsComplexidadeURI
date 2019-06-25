@@ -19,11 +19,8 @@ def solve(regiao, restam):
         return DP[regiao][restam]
     elif DP[regiao][restam] != -1:
         return DP[regiao][restam]
-    solved = solve(regiao+1,restam)
-    if solved:
-        DP[regiao][restam] = solved
-    else:
-        DP[regiao][restam] = solve(regiao+1,restam - GRAU[regiao])
+
+    DP[regiao][restam] = solve(regiao+1, restam) or solve(regiao+1, restam - GRAU[regiao])
 
     return DP[regiao][restam]
 
@@ -51,13 +48,13 @@ def main():
             cid_b = int(line[1])
             GRAU[cid_a] += 1
             GRAU[cid_b] += 1
-        solved = solve(0, PONTES)
-        if solved:
-            results.append('S')
-        else:
-            results.append('N')
+        results.append(solve(0, PONTES))
+
     for i in results:
-        print i
+        if i:
+            print 'S'
+        else:
+            print 'N'
     print ""
     
 main()
