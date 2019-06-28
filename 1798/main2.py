@@ -1,37 +1,33 @@
 # -*- coding: utf-8 -*-
 
-ci = [] # tamanho de cada cano
-vi = [] # valor de cada cano
-
-m = []
 
 def main():
 
-    m = [0 for i in range(2000)]
-    # scanf("%d",&NC);
-    # scanf("%d",&TC);
+    result = []
+    comprimento = []
+    valor = []
 
-    import sys
-    sys.stdin = open('teste.txt')
+    # import sys
+    # sys.stdin = open('teste.txt')
 
-    lines = input().split()
-
-    NC = int(lines[0])
-    TC = int(lines[1])
-
-    for i in range(NC):
+    try:
         line = input().split()
-        ci.insert(i, int(line[0]))
-        vi.insert(i, int(line[1]))
-        # scanf("%d%d",&ci[i],&vi[i]);
-    m.append(0)
-    for w in range(TC+1):
-        m[w] = m[w-1];
-        for j in range(NC):
-            if(ci[j] <= w):
-                if(m[w] < m[w-ci[j]] + vi[j]):
-                    m[w] = m[w-ci[j]]+ vi[j]
-    print(m[TC]);
-    return 0
+    except EOFError:
+        pass
+    num = int(line[0])
+    tam = int(line[1])
+
+    for i in range(num):
+        lines = input().split()
+        comprimento.insert(i, int(lines[0]))
+        valor.insert(i, int(lines[1]))
+    result = [0 for i in range(2005)]
+
+    for i in range(tam+1):
+        result[i] = result[i-1]
+        for j in range(num):
+            if(comprimento[j] <= i and result[i] < result[i-comprimento[j]] + valor[j]):
+                result[i] = result[i-comprimento[j]]+ valor[j]
+    print(result[tam])
 
 main()
